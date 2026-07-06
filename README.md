@@ -26,18 +26,9 @@ Each line is evaluated in order. The result shows to the right of the line.
 
 ## Preview
 
-That block renders like this (currency and date values are live, so yours will differ):
-
 | Input | Output |
 | --- | --- |
-| `Price: $10` | `$10` |
-| `Fee: 4 GBP in Euro` | `€4.67` |
-| `sum in USD - 4%` | `$14.73` |
-| `next friday + 2 weeks` | `7/31/2026` |
-| `20 ml in tea spoons` | `4 tsp` |
-| `20% of what is 30 cm` | `150 cm` |
-
-![S-Calc demo](img/demo.png)
+| <pre>Price: $10<br>Fee: 4 GBP in Euro<br>sum in USD - 4%<br>next friday + 2 weeks<br>20 ml in tea spoons<br>20% of what is 30 cm</pre> | ![S-Calc demo](img/demo.png) |
 
 ## What it can do
 
