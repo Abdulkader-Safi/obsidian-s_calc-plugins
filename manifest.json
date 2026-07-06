@@ -1,7 +1,7 @@
 {
 	"id": "s-calc",
 	"name": "S-Calc",
-	"version": "1.0.0",
+	"version": "0.5.0",
 	"minAppVersion": "1.7.2",
 	"description": "A live calculator code block: write expressions and see each line's result, with units, currencies, percentages, and dates.",
 	"author": "Abdulkader Safi",

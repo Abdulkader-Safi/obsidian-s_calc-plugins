@@ -1,6 +1,6 @@
 {
 	"name": "s-calc",
-	"version": "1.0.0",
+	"version": "0.5.0",
 	"description": "A live calculator code block for Obsidian: write expressions and see the result on each line.",
 	"author": "Abdulkader Safi <safi.abdulkader@gmail.com> (https://abdulkadersafi.com)",
 	"repository": {
