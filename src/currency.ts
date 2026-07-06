@@ -38,7 +38,8 @@ export async function loadRates(onLoaded: () => void): Promise<void> {
 	if (ready) return;
 	try {
 		const res = await requestUrl({ url: RATES_URL });
-		const rates: Record<string, number> = res.json?.rates ?? {};
+		const json = res.json as { rates?: Record<string, number> };
+		const rates: Record<string, number> = json.rates ?? {};
 		let registered = 0;
 
 		for (const [code, rate] of Object.entries(rates)) {

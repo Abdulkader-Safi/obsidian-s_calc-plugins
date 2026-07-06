@@ -10,6 +10,7 @@ export default tseslint.config(
 		'esbuild.config.mjs',
 		'version-bump.mjs',
 		'versions.json',
+		'src/engine.selftest.ts',
 		'main.js',
 		'package.json',
 		'package-lock.json',

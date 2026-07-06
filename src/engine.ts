@@ -102,7 +102,7 @@ function evaluateLine(
 function tryCompute(expr: string, scope: Record<string, unknown>): unknown {
 	const mathExpr = preprocess(expr);
 	try {
-		const v = math.evaluate(mathExpr, scope);
+		const v: unknown = math.evaluate(mathExpr, scope);
 		if (typeof v === 'function') return undefined;
 		return v;
 	} catch {
@@ -212,7 +212,7 @@ function formatValue(value: unknown): string {
 
 	// BigNumber / Fraction and anything else: let mathjs stringify it.
 	try {
-		return math.format(value as never, { precision: 6 });
+		return math.format(value, { precision: 6 });
 	} catch {
 		return String(value);
 	}
