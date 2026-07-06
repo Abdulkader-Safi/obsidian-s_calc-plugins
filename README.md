@@ -26,9 +26,7 @@ Each line is evaluated in order. The result shows to the right of the line.
 
 ## Preview
 
-| Input | Output |
-| --- | --- |
-| <pre>Price: $10<br>Fee: 4 GBP in Euro<br>sum in USD - 4%<br>next friday + 2 weeks<br>20 ml in tea spoons<br>20% of what is 30 cm</pre> | ![S-Calc demo](img/demo.png) |
+![S-Calc demo](img/demo.png)
 
 ## What it can do
 
