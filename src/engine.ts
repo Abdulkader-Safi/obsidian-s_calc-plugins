@@ -1,5 +1,5 @@
 import * as chrono from 'chrono-node';
-import { math } from './mathjs-setup';
+import { math, currencyCode } from './mathjs-setup';
 
 export type LineResult = { text: string; error: boolean } | null;
 
@@ -131,10 +131,15 @@ function preprocess(expr: string): string {
 	// Collapse two-word units.
 	for (const [re, name] of UNIT_PHRASES) s = s.replace(re, name);
 
-	// Use mathjs's "to" conversion instead of "in" to avoid the inch alias.
-	// ponytail: this rewrites a standalone "in", so writing "5 in" for inches
-	// won't convert; use "inch" for inches.
-	s = s.replace(/\bin\b/gi, ' to ');
+	// Rewrite "LEFT in UNIT REST" into "(LEFT to UNIT) REST". Using mathjs's "to"
+	// avoids the "in" == inch alias, and the parens keep the conversion binding
+	// tighter than a trailing operator (e.g. "sum in USD - 4%").
+	// ponytail: single-word conversion target only; write "inch" for inches and
+	// use an ISO code for multi-word currency names.
+	s = s.replace(
+		/^(.*?)\s+in\s+([A-Za-z_][A-Za-z0-9_]*)\b(.*)$/i,
+		'($1 to $2)$3',
+	);
 
 	return s;
 }
@@ -175,7 +180,13 @@ function addSafe(acc: unknown, value: unknown): unknown {
 	}
 }
 
-function isUnit(v: unknown): v is { formatUnits(): string; toNumeric(u: string): number } {
+interface MathUnit {
+	formatUnits(): string;
+	toNumeric(u: string): number;
+	units: { unit: { name: string } }[];
+}
+
+function isUnit(v: unknown): v is MathUnit {
 	return typeof v === 'object' && v !== null && 'toNumeric' in v && 'formatUnits' in v;
 }
 
@@ -187,9 +198,13 @@ function formatValue(value: unknown): string {
 	if (isUnit(value)) {
 		const unitStr = value.formatUnits();
 		const n = value.toNumeric(unitStr);
-		const code = unitStr.toUpperCase();
-		if (code in CURRENCY_SYMBOLS) {
-			return `${CURRENCY_SYMBOLS[code]}${formatNumber(n)}`;
+		// Resolve the ISO code from whatever alias was used (e.g. "Euro" -> EUR).
+		const name = value.units[0]?.unit.name ?? unitStr;
+		const code = currencyCode.get(name) ?? currencyCode.get(unitStr);
+
+		if (code) {
+			const sym = CURRENCY_SYMBOLS[code];
+			return sym ? `${sym}${formatNumber(n)}` : `${formatNumber(n)} ${code}`;
 		}
 		const label = UNIT_ABBREV[unitStr] ?? unitStr;
 		return `${formatNumber(n)} ${label}`;
