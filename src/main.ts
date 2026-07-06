@@ -5,7 +5,7 @@ import { scalcEditorExtension, bumpRatesVersion } from './editor';
 import { loadRates } from './currency';
 
 export default class SCalcPlugin extends Plugin {
-	async onload() {
+	onload() {
 		// Live results while editing (source mode and live-preview raw blocks).
 		this.registerEditorExtension(scalcEditorExtension);
 

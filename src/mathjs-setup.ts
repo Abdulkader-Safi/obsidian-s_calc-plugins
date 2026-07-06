@@ -1,8 +1,8 @@
-import { create, all } from 'mathjs';
+import { create, all, type MathJsInstance } from 'mathjs';
 
 // Single shared mathjs instance. currency.ts registers currency units on it once
 // live rates are fetched; the engine evaluates against it.
-export const math = create(all!, {});
+export const math: MathJsInstance = create(all!, {});
 
 // Maps every currency unit name/alias (as it appears in the parsed result, e.g.
 // "USD", "Euro", "pound") to its ISO code, so the engine can print a clean code
