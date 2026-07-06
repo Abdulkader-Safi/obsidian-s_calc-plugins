@@ -22,7 +22,7 @@
 		"calculator",
 		"math"
 	],
-	"license": "0BSD",
+	"license": "MIT",
 	"devDependencies": {
 		"@codemirror/state": "^6.5.0",
 		"@codemirror/view": "^6.38.6",
