@@ -25,6 +25,11 @@ assert(text(['20% of what is 30 cm'])[0] === '150 cm', 'reverse percentage');
 // Variables carry down the block
 eq(['Price: 10', 'Price * 2'], ['10', '20'], 'variables');
 
+// Unicode labels (issue #1)
+eq(['Ár: 10', 'Ár * 2'], ['10', '20'], 'accented label');
+eq(['Цена = 5', 'Цена * 3'], ['5', '15'], 'cyrillic label');
+eq(['価格: 7', '価格 + 1'], ['7', '8'], 'cjk label');
+
 // sum and prev keywords
 assert(text(['5', '10', 'sum'])[2] === '15', 'sum');
 assert(text(['5', 'prev + 1'])[1] === '6', 'prev');

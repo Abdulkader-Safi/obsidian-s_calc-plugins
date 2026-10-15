@@ -78,7 +78,7 @@ function evaluateLine(
 	scope: Record<string, unknown>,
 ): { result: LineResult; value: unknown } {
 	// Assignment: "label: expr" or "label = expr".
-	const assign = /^([A-Za-z][A-Za-z0-9 _]*?)\s*[:=]\s*(.+)$/.exec(line);
+	const assign = /^(\p{L}[\p{L}\p{N} _]*?)\s*[:=]\s*(.+)$/u.exec(line);
 	const expr = assign ? assign[2]! : line;
 	const label = assign ? assign[1]!.trim() : null;
 
@@ -91,7 +91,7 @@ function evaluateLine(
 	}
 
 	if (label) {
-		const key = label.replace(/[^A-Za-z0-9_]+/g, '_').replace(/^_+|_+$/g, '');
+		const key = label.replace(/[^\p{L}\p{N}_]+/gu, '_').replace(/^_+|_+$/g, '');
 		if (key) scope[key] = value;
 	}
 

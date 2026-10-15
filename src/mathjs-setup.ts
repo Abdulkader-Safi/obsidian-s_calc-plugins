@@ -4,6 +4,11 @@ import { create, all, type MathJsInstance } from 'mathjs';
 // live rates are fetched; the engine evaluates against it.
 export const math: MathJsInstance = create(all!, {});
 
+// mathjs only allows Latin and Greek letters in names. Accept any Unicode letter
+// so labels like "Цена" or "価格" work as variables.
+const isAlpha = math.parse.isAlpha.bind(math.parse);
+math.parse.isAlpha = (c, cPrev, cNext) => isAlpha(c, cPrev, cNext) || /\p{L}/u.test(c);
+
 // Maps every currency unit name/alias (as it appears in the parsed result, e.g.
 // "USD", "Euro", "pound") to its ISO code, so the engine can print a clean code
 // regardless of which alias the user typed. Populated here for USD and by
